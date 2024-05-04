@@ -2,7 +2,9 @@ import requests
 import pandas as pd
 from tqdm import tqdm
 from bs4 import BeautifulSoup as bs
+import json
 data = []
+dataJson = []
 for page in tqdm(range(1,11)):
     link = 'https://quotes.toscrape.com/page/' + str(page)
     res  = requests.get(link)
@@ -18,4 +20,11 @@ for page in tqdm(range(1,11)):
         tags = ','.join(tags)
         data.append([quote, author, author_id, tags , author_link])
 df = pd.DataFrame(data, columns=['Quotes', 'Author_name', 'Author_id', 'Tags' , 'Author_link'])
+dataJson.append({"quote":quote, "author":author, "author_id" : author_id, "tags" : tags , "author_link" : author_link} )
+# Saving data into json file
 df.to_csv('Data.csv')
+
+# Saving data into json file
+json_object = json.dumps(dataJson, indent=4)
+with open("quotes.json", "w") as outfile:
+    outfile.write(json_object)
