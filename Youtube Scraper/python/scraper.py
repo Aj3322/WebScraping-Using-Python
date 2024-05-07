@@ -51,7 +51,7 @@ for sp in tqdm(soup.find_all('ytd-rich-item-renderer')):
 df = pd.DataFrame(data, columns=['Title', 'Thumbnail_img', 'Video_link', 'No_Views', 'Duration'])
 
 # Checking for missing values
-df.isna().sum()
+print(df.isna().sum())
 
 # Saving the data
 df.to_csv('data.csv')
